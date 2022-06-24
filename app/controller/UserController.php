@@ -24,6 +24,7 @@ class UserController
     {
         View::render('user/login', [
             'title' => 'Login Page',
+            'message_error' => $_SESSION['message_error'] ?? ''
         ]);
     }
 
@@ -37,7 +38,8 @@ class UserController
             if ($result) {
                 echo "Berhasil Login dengan username $request->name";
             } else {
-                echo "Gagal Login, silahkan buat akun terlebih dahulu";
+                $_SESSION['message_error'] = "Gagal Login";
+                View::redirect('/login');
             }
         } catch (\Throwable $th) {
             echo $th->getMessage();

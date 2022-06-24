@@ -18,4 +18,7 @@ Route::add('GET', '/product/([0-9a-zA-Z]*)', ProductController::class, 'setProdu
 Route::add("GET", "/login", UserController::class, "login");
 Route::add("POST", "/login", UserController::class, "postLogin");
 
+// User Read Post
+Route::add('GET', '/post/read/([0-9a-zA-Z]*)', HomeController::class, 'readPost');
+
 Route::run();

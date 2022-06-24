@@ -2,8 +2,8 @@
 
 namespace App\Native\Repository;
 
+use App\Native\Model\User;
 use PDO;
-use User;
 
 class UserRepository
 {

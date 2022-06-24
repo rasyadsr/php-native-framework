@@ -10,4 +10,10 @@ class View
         require_once __DIR__ . "/../view/" . $view . ".php";
         require_once __DIR__ . "/../view/templates/footer.php";
     }
+
+    public static function redirect(string $url)
+    {
+        header("Location: $url");
+        exit();
+    }
 }
