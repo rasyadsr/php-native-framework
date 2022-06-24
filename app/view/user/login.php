@@ -1,4 +1,5 @@
 <?php require_once __DIR__ . '/../templates/header.php' ?>
+<?php var_dump($_SESSION) ?? "Belum ada Session"; ?>
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-xl-4">
