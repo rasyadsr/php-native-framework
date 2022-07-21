@@ -2,7 +2,8 @@
 
 namespace App\Native\Repository;
 
-use App\Native\Model\User;
+use App\Native\Domain\Session;
+use App\Native\Domain\User;
 use PDO;
 
 class UserRepository
@@ -28,17 +29,34 @@ class UserRepository
         return $array;
     }
 
-    public function findById($user)
+    public function findById(string $id): ?User
     {
-        $statement = $this->connection->prepare("SELECT name, password FROM users WHERE name = :name AND password = :password ");
-        $statement->bindParam(':name', $user->name);
-        $statement->bindParam(':password', $user->password);
-        $statement->execute();
+        $statement = $this->connection->prepare("SELECT id, name, password FROM users WHERE id = ?");
+        $statement->execute([$id]);
 
-        if ($statement->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
+        try {
+            if ($row = $statement->fetch()) {
+                $user = new User();
+                $user->id = $row['id'];
+                $user->name = $row['name'];
+                $user->password = $row['password'];
+                return $user;
+            } else {
+                return null;
+            }
+        } finally {
+            $statement->closeCursor();
         }
+    }
+
+    public function save($user): User
+    {
+        $statement = $this->connection->prepare("INSERT INTO users(id, name, password) VALUES(?,?,?)");
+        $statement->execute([$user->id, $user->name, $user->password]);
+        $user = new User();
+        $user->id = $user->id;
+        $user->name = $user->name;
+        $user->password = $user->password;
+        return $user;
     }
 }

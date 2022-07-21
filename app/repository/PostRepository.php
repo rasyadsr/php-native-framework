@@ -2,7 +2,10 @@
 
 namespace App\Native\Repository;
 
-use App\Native\Model\Post;
+use App\Native\Domain\Post;
+use App\Native\Domain\User;
+use PDO;
+use stdClass;
 
 class PostRepository
 {
@@ -22,7 +25,7 @@ class PostRepository
                 'id' => $row['id'],
                 'title' => $row['title'],
                 'body' => $row['body'],
-                'category_id' => $row['category_id'],
+                'category' => $row['category_id'],
                 'user_id' => $row['user_id'],
                 'created_at' => $row['created_at'],
                 'updated_at' => $row['updated_at'],
@@ -68,5 +71,21 @@ class PostRepository
     public function deleteAllFaker()
     {
         $this->connection->query("DELETE FROM posts");
+    }
+
+    public function showByUserId(User $user): array
+    {
+        $statement = $this->connection->prepare("SELECT id, title, body, comment_id, user_id, category_id, created_at, updated_at FROM posts WHERE user_id = ?");
+        $statement->execute([$user->id]);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function search(stdClass $data)
+    {
+        if ($data->key != " ") {
+            $statement = $this->connection->prepare("SELECT id, name, password FROM users WHERE id LIKE ?");
+            $statement->execute(["%$data->key%"]);
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 }

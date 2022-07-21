@@ -2,7 +2,7 @@
 
 namespace App\Native\Model;
 
-class UserRegistration
+class UserRegisterRequest
 {
     public ?string $id = null;
 

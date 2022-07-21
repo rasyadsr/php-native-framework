@@ -38,7 +38,7 @@
     </div>
     <div class="row d-flex justify-content-center">
         <?php foreach ($data['posts'] as $post) : ?>
-            <div class="col-xl-3">
+            <div class="col-xl-3 col-md-6">
                 <a href="/post/read/<?= $post['id'] ?>" class="text-decoration-none text-dark">
                     <div class="card mb-5 border-0" style="width: 19rem;">
                         <img src="<?= BASE_URL . 'assets/img/sample.jpg' ?>" class="card-img-top card-img-bottom" alt="...">

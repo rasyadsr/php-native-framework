@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 require_once __DIR__ . "/../app/config/config.php";
 
+use App\Native\Controller\DashboardController;
 use App\Native\Core\Database;
 use App\Native\Controller\HomeController;
 use App\Native\Controller\ProductController;
@@ -20,5 +21,13 @@ Route::add("POST", "/login", UserController::class, "postLogin");
 
 // User Read Post
 Route::add('GET', '/post/read/([0-9a-zA-Z]*)', HomeController::class, 'readPost');
+
+// Dashboard
+Route::add('GET', '/dashboard', DashboardController::class, 'index');
+Route::add('GET', '/dashboard/my-post', DashboardController::class, 'myPost');
+Route::add('POST', '/dashboard/api/search-myPost', DashboardController::class, 'searchMyPost');
+
+Route::add('GET', '/register', UserController::class, 'register');
+Route::add('POST', '/register', UserController::class, 'postRegister');
 
 Route::run();
